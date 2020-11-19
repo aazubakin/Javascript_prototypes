@@ -1,5 +1,4 @@
 module.exports = Collection;
-
 /**
  * Конструктор коллекции
  * @constructor
@@ -7,7 +6,6 @@ module.exports = Collection;
 function Collection(arr) {
   this.arr = arr ? arr : [];
 }
-
 
 // Методы коллекции
 Collection.prototype.values = function () {
@@ -22,7 +20,13 @@ Collection.prototype.at = function (pos) {
   return this.arr[pos - 1];
 }
 Collection.prototype.append = function (element) {
-  this.arr.push(element);
+
+  if (element instanceof Collection) {
+    for (let i = 0; i < element.arr.length; i++) {
+      this.arr.push(element.arr[i]);
+    }//this.arr.concat(element.arr)
+  }
+  else this.arr.push(element);
 }
 Collection.prototype.removeAt = function (pos) {
   if (pos < 1 || pos > this.arr.length) return false;
@@ -30,7 +34,6 @@ Collection.prototype.removeAt = function (pos) {
   this.arr.splice(pos - 1, 1);
   return true;
 }
-
 /**
  * Создание коллекции из массива значений
  */
